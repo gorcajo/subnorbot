@@ -2,51 +2,53 @@ Todo está aquí:
 http://arduino.cc/forum/index.php/topic,118089.0.html
 ...y su contenido es:
 
-"Hello all, since I've been helped by so many knowledgeable and generous people here, I wanted to give back a little on what I've learned.  After two days of searching literally hundreds of forums, blogs and spec sheets, I was finally able to get my Atmel AVRISP MKii to work with the Arduino IDE and upload sketches to my breadboarded Mega 328P IC.  I found many threads with tips on doing this and that, but none had all the missing pieces nor helped walk a newcomer through all the little adjustments that had to be made in order to make this happen (at least for a newbie like myself).
+    "Hello all, since I've been helped by so many knowledgeable and generous people here, I wanted to give back a little on what I've learned.  After two days of searching literally hundreds of forums, blogs and spec sheets, I was finally able to get my Atmel AVRISP MKii to work with the Arduino IDE and upload sketches to my breadboarded Mega 328P IC.  I found many threads with tips on doing this and that, but none had all the missing pieces nor helped walk a newcomer through all the little adjustments that had to be made in order to make this happen (at least for a newbie like myself).
 
-So here goes;  For this particular tutorial, I'm using a breadboarded Mega328P with the Atmel AVRISP MKii with Arduino IDE 0023 on a Windows 7 machine. If anyone spots an error, please let me know.
+    So here goes;  For this particular tutorial, I'm using a breadboarded Mega328P with the Atmel AVRISP MKii with Arduino IDE 0023 on a Windows 7 machine. If anyone spots an error, please let me know.
 
-1.  DO NOT install the Atmel AVR Studio software suite.  It installs the "Jungo USB" driver which is not compatible with AVRdude (which the Arduino IDE uses).  You can either use one of the other, not both at the same time.
+    1.  DO NOT install the Atmel AVR Studio software suite.  It installs the "Jungo USB" driver which is not compatible with AVRdude (which the Arduino IDE uses).  You can either use one of the other, not both at the same time.
 
-If by chance you had already installed AVR Studio and the Jungo Drivers, don't worry, I'll show you how to replace it further down.
+    If by chance you had already installed AVR Studio and the Jungo Drivers, don't worry, I'll show you how to replace it further down.
 
-2.  Download the LibUSB-Win32 driver and extract it somewhere temporary.  It can be found at www.libusb.org, however, for some reason my machine did not like this version, so I found another version that appeared to be tailored specifically for the AVRISP MKii here: http://mightyohm.com/blog/2010/09/avrisp-mkii-libusb-drivers-for-windows-7-vista-x64/
+    2.  Download the LibUSB-Win32 driver and extract it somewhere temporary.  It can be found at www.libusb.org, however, for some reason my machine did not like this version, so I found another version that appeared to be tailored specifically for the AVRISP MKii here: http://mightyohm.com/blog/2010/09/avrisp-mkii-libusb-drivers-for-windows-7-vista-x64/
 
-3.  Now if you haven't installed the Jungo USB drivers, then you can simply plug in your AVRISP MKii, but when it asks whether you wish to install the drivers for it automatically or manually, choose MANUAL. If your did like mine and went ahead automatically and installed the stinkin Jungo USB drivers anyway, then you'll need to do the follow:
+    3.  Now if you haven't installed the Jungo USB drivers, then you can simply plug in your AVRISP MKii, but when it asks whether you wish to install the drivers for it automatically or manually, choose MANUAL. If your did like mine and went ahead automatically and installed the stinkin Jungo USB drivers anyway, then you'll need to do the follow:
 
-How to replace the Jungo USB drivers:
-A. Go into your Device Manager and expand the tree under "Jungo".  If you see "AVRISP mkII" there, then you'll need to replace that driver with the LibUSB-Win32 driver. Right-Click and select "Update Driver Software" and then choose "Browse my computer for driver software".  Then simply navigate to where you extracted your LibUSB-Win32 drivers and let it do it's thing. If it refuses to replace it or says that Windows deems the current driver the latest, then you'll need to find a better/newer copy of the LibUSB driver.  You can also try uninstalling the Jungo driver first, but my smartass PC kept reinstalling it automatically everytime I plugged the AVRISP MKii back in---regardless of me manually clicking cancel!
+    How to replace the Jungo USB drivers:
+    A. Go into your Device Manager and expand the tree under "Jungo".  If you see "AVRISP mkII" there, then you'll need to replace that driver with the LibUSB-Win32 driver. Right-Click and select "Update Driver Software" and then choose "Browse my computer for driver software".  Then simply navigate to where you extracted your LibUSB-Win32 drivers and let it do it's thing. If it refuses to replace it or says that Windows deems the current driver the latest, then you'll need to find a better/newer copy of the LibUSB driver.  You can also try uninstalling the Jungo driver first, but my smartass PC kept reinstalling it automatically everytime I plugged the AVRISP MKii back in---regardless of me manually clicking cancel!
 
-4. If the LibUSB-Win32 driver installed correctly, the AVRISP MKii should now appear under "LibUSB-Win32 Devices" instead of the Jungo tree. This is important to make sure of because the Arduino IDE will NOT work with it as long as it appears under Jungo.
+    4. If the LibUSB-Win32 driver installed correctly, the AVRISP MKii should now appear under "LibUSB-Win32 Devices" instead of the Jungo tree. This is important to make sure of because the Arduino IDE will NOT work with it as long as it appears under Jungo.
 
-5. Now, to get the Mega328p to work with IDE 0023, you'll need to edit the /hardware/boards.txt << within your Arduino install folder and add the following to the very bottom:
+    5. Now, to get the Mega328p to work with IDE 0023, you'll need to edit the /hardware/boards.txt << within your Arduino install folder and add the following to the very bottom:
 
-###############################################
+    ###############################################
 
-atmega328bb.name=AVRISP mkII w/ ATmega328
-atmega328bb.upload.using=arduino:avrispmkii
-atmega328bb.upload.maximum_size=30720
-atmega328bb.upload.speed=57600
-atmega328bb.bootloader.low_fuses=0xE2
-atmega328bb.bootloader.high_fuses=0xDA
-atmega328bb.bootloader.extended_fuses=0x05
-atmega328bb.bootloader.path=arduino:atmega
-atmega328bb.bootloader.file=ATmegaBOOT_168_atmega328_pro_8MHz.hex
-atmega328bb.bootloader.unlock_bits=0x3F
-atmega328bb.bootloader.lock_bits=0x0F
-atmega328bb.build.mcu=atmega328p
-atmega328bb.build.f_cpu=8000000L
-atmega328bb.build.core=arduino:arduino
-atmega328bb.build.variant=standard
+    atmega328bb.name=AVRISP mkII w/ ATmega328
+    atmega328bb.upload.using=arduino:avrispmkii
+    atmega328bb.upload.maximum_size=30720
+    atmega328bb.upload.speed=57600
+    atmega328bb.bootloader.low_fuses=0xE2
+    atmega328bb.bootloader.high_fuses=0xDA
+    atmega328bb.bootloader.extended_fuses=0x05
+    atmega328bb.bootloader.path=arduino:atmega
+    atmega328bb.bootloader.file=ATmegaBOOT_168_atmega328_pro_8MHz.hex
+    atmega328bb.bootloader.unlock_bits=0x3F
+    atmega328bb.bootloader.lock_bits=0x0F
+    atmega328bb.build.mcu=atmega328p
+    atmega328bb.build.f_cpu=8000000L
+    atmega328bb.build.core=arduino:arduino
+    atmega328bb.build.variant=standard
 
-###############################################
+    ###############################################
 
-Keep in mind the above is for the Mega328P (the "P" being the "Pico" version of the chip). You'll need to make some minor adjustments for the non-pico version).
+    Keep in mind the above is for the Mega328P (the "P" being the "Pico" version of the chip). You'll need to make some minor adjustments for the non-pico version).
 
-6. Now locate /lib/preferences.txt file and find the line "upload.using=bootloader" and replace it with, "upload.using=avrispmkii" (we're just replacing the bootloader with the avrispmkii)
+    6. Now locate /lib/preferences.txt file and find the line "upload.using=bootloader" and replace it with, "upload.using=avrispmkii" (we're just replacing the bootloader with the avrispmkii)
 
-7. DONE! You're now ready to begin using your new AVRISP MKii!!! When you first open up the Arduino IDE (I'm using 0023) go to Tools > Boards > and you'll see a new entry for "AVRSIP MKII w/ ATMega328" > choose this one if you're that's the chip you're using like I am.  After that, I'd suggest you try out a simple sketch like the Blink LED in the examples folder and make sure it all works.
+    7. DONE! You're now ready to begin using your new AVRISP MKii!!! When you first open up the Arduino IDE (I'm using 0023) go to Tools > Boards > and you'll see a new entry for "AVRSIP MKII w/ ATMega328" > choose this one if you're that's the chip you're using like I am.  After that, I'd suggest you try out a simple sketch like the Blink LED in the examples folder and make sure it all works.
 
-Some closing tips. If you're hooking up the MKii to your breadboard, be sure you have the cable's pinouts correctly.  I found so much confusing and contradictory pinout information for the AVRISP MKii on the web it was rediculous. It all comes down to locating PIN 1 -- which is always located on the side of the ribbon with the stripe. Now since two pinholes line up with the ribbon stripe, look carefully for a triangle symbol. The triangle will point you to PIN 1, and thereafter you can make out the orientation of all the other pins.
+    Some closing tips. If you're hooking up the MKii to your breadboard, be sure you have the cable's pinouts correctly.  I found so much confusing and contradictory pinout information for the AVRISP MKii on the web it was rediculous. It all comes down to locating PIN 1 -- which is always located on the side of the ribbon with the stripe. Now since two pinholes line up with the ribbon stripe, look carefully for a triangle symbol. The triangle will point you to PIN 1, and thereafter you can make out the orientation of all the other pins.
 
-I really hope this helps out other people and saves you all the headaches I had to go through to get this thing working. I swear at one point I was ready to hang the MKii on a post outside and put a bullet through it!"
+    I really hope this helps out other people and saves you all the headaches I had to go through to get this thing working. I swear at one point I was ready to hang the MKii on a post outside and put a bullet through it!"
+
+Se enchufa el programador al Arduino en los pines ISP y se alimenta tanto el programador como el arduino. Y yastá.
