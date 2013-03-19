@@ -1,0 +1,76 @@
+============================================
+Estructura del SW
+============================================
+
+Una única clase, que contiene, entre otros atributos, dos objetos de la clase Servo y un objeto de la clase NewPing.
+
+------------------------
+SubnorBot
+------------------------
++ initialize()	void	 //inicializacion general
++ sense()	void	 //lectura de sensores y obtención de info útil
++ resolve()	void	 //decisión del robot (la IA, vamos) en base a la info
++ move()	void	 //control y uso de los motores
++ setSniffers() void     //permite guardar el estado de los siguelineas desde la ISR
+------------------------
+- sniffers	struct	 //estado de todos los siguelineas
+  - ne		bitfield //siguelineas frontal derecho
+  - se		bitfield //siguelineas trasero derecho
+  - sw		bitfield //siguelineas trasero izquierdo
+  - nw		bitfield //siguelineas frontal izquierdo
+  - any		bitfield //la OR de todos los siguelineas
+- sonar		struct	 //sensor de ultrasonidos
+  - obj		NewPing	 //objeto para controlar el sonar
+  - dist	int	 //distancia en cm, -1 si no detecta al enemigo
+- engines	struct	 //motores
+  - right	Servo	 //objeto para controlar el motor derecho
+  - left	Servo	 //objeto para controlar el motor izquierdo
+  - speedR	int	 //velocidad del motor derecho, de -90 a +90
+  - speedL	int	 //velocidad del motor izquierdo, de -90 a +90
+- error		char     //codigo de error, 0 si no hay error
+------------------------
+
+Los métodos initialize(), sense(), resolve() y move() no tienen parámetros.
+
+El método setSiniffers recibe 4 parámetros, correspondientes al estado de cada siguelineas; a partir de ellos internamente almacenará si cada sensor detecta el borde (true) o no (false) en el struct correspondiente, poniendo a true "any" si al menos uno de los siguelineas detecta el borde.
+
+
+============================================
+Flujo (pseudocodigo)
+============================================
+
+initialize();
+
+while(1) {
+  sense();
+  resolve();
+  move();
+}
+
+/***/
+
+sniffersISR()
+{
+  setSniffers(digitalRead(a),
+              digitalRead(a),
+              digitalRead(c),
+              digitalRead(d));
+}
+
+
+============================================
+Ficheros
+============================================
+
+- sw.ino
+- subnorbot.h
+- initialize.cpp
+- sense.cpp
+- resolve.cpp
+- move.cpp
+
+Las funciones de arduino setup() y loop(), la rutina de atención a la interrupción snifferISR() y el método de SubnorBot setSniffers() van en el fichero sw.ino.
+
+En subnorbot.h se realiza el #include a Arduino.h, NewPing.h y Servo.h, y a todos los ficheros de cabeceras que se necesiten.
+
+Si se necesitara alguna funcion extra para codificar algun fichero .cpp se codifica ahí mismo, colocando el prototipo de la funcion al comienzo y la implementación debajo del método de la clase. Serán funciones locales al fichero .cpp, sus nombres empiezan con _.

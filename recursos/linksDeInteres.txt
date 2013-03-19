@@ -1,0 +1,2 @@
+Guía rápida de GIT:
+http://www.polinux.upv.es/drupal/node/1062

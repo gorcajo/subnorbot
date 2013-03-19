@@ -1,0 +1,12 @@
+============================================
+Estandar de indentificadores
+============================================
+
+ClassOrType
+propertyOrMethod
+_localVariable
+_localFunction
+CONSTANT_OR_GLOBAL_VARIABLE
+MACRO
+
+(todo en inglés, ¿comentarios incluídos?)
