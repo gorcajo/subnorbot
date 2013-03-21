@@ -1,6 +1,6 @@
 #include "subnorbot.h"
 
-int SubnorBot::resolve()
+void SubnorBot::resolve()
 {    
-    return 0;
+  //...
 }
