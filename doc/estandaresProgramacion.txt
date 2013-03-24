@@ -4,11 +4,12 @@ Estandar de indentificadores
 
 ClassOrType
 propertyOrMethod
-parameterOfAFunction
+parameterOfALocalFunction
 _parameterOfAMethod
 _localVariable
 _localFunction
 CONSTANT_OR_GLOBAL_VARIABLE
 MACRO
+ENUM_ELEMENT
 
 (todo en inglés, ¿comentarios incluídos?)

@@ -17,15 +17,18 @@ void SubnorBot::initialize()
   sonar.dist = -1;
   
   //Inicializacion de las velocidades deseadas de los motores:
-  engines.speedR = 0;
   engines.speedL = 0;
-  if (!engines.right.attached())
-    engines.right.attach(PIN_ENGINE_R);
+  engines.speedR = 0;
   if (!engines.left.attached())
     engines.left.attach(PIN_ENGINE_L);
+  if (!engines.right.attached())
+    engines.right.attach(PIN_ENGINE_R);
   
   //Codigo de error:
   error = 0;
+  
+  //Depuracion:
+  Serial.begin(9600);
   
   //Espera de 5s menos el tiempo que ha llevado ejecutar este metodo:
   delay(5000 - (millis() - _startTime));

@@ -7,8 +7,6 @@
 
 /** Constantes
  *
- * Macros numericas relacionadas con el hardware.
- *
  */
 //Siguelineas:
 #define PIN_SNIFFER_NE  4
@@ -24,6 +22,11 @@
 #define PIN_ENGINE_R 9
 #define PIN_ENGINE_L 10
 
+/** Tipos
+ *
+ */
+typedef enum {R, L} Side;
+
 /** Clase SubnorBot
  *
  * Manejo completo del robot. Su unica instancia se realiza como variable
@@ -33,27 +36,37 @@
  * constructor por defecto, vacio) ni destructor.
  *
  */
-class SubnorBot
-{
+class SubnorBot {
   public:
-    //Realiza todas las configuraciones iniciales (se ejecuta solo antes de entrar en el main loop):
-    void initialize();
+    //Housekeeping (metodos ejecutados en el setup() de Arduino):
+    void initialize(); //realiza todas las configuraciones iniciales
     
-    //Main loop:
-    void sense();   //Encargado de realizar todas las adquisiciones del exterior y ofrecer informacion util.
-    void resolve(); //Procesa la informacion de sense() y toma decisiones.
-    void move();    //Segun las decisiones de resolve() realiza el manejo de los motores.
+    //Main loop (metodos ejecutados en el loop() de Arduino):
+    void sense();   //Encargado de realizar todas las adquisiciones del exterior y ofrecer informacion util
+    void resolve(); //Procesa la informacion de sense() y toma decisiones
+    void move();    //Segun las decisiones de resolve() realiza el manejo de los motores
     
-    //Almacena el estado de los siguelineas (implementada en sense.cpp):
-    void setSniffers(boolean _ne, boolean _se, boolean _sw, boolean _nw);
+    //Metodos relacionados con los sensores (implementados en sense.cpp):
+    void setSniffers(boolean _ne, boolean _se, boolean _sw, boolean _nw); //almacena el estado de los siguelineas
+    
+    //Metodos relacionados con la IA (implementados en resolve.cpp):
+    void rotate(Side side); //rotacion sobre si mismo
+    void pivot(Side side);  //pivotar hacia la derecha (sobre una rueda)
+    void aproach();         //acercamiento a baja velocidad al rival
+    void charge();          //carga y empuje contra el rival a toda velocidad
+    void evade();           //escapar de la pelea al derectar un borde
+    void runAway();         //huir del enemigo marcha atras
+    
+    //Metodos relacionados con los motores (implementados en move.cpp):
+    void setSpeed(int l, int r); //Establece una velocidad en ambos motores
 
   private:
-    struct {        //bitfield que ocupa un byte
-      char ne  : 1; //bit correspondiente al sensor frontal derecho (1 = borde detectado)
-      char se  : 1; //bit correspondiente al sensor trasero derecho (1 = borde detectado)
-      char sw  : 1; //bit correspondiente al sensor trasero izquierdo (1 = borde detectado)
-      char nw  : 1; //bit correspondiente al sensor frontal izquierdo (1 = borde detectado)
-      char any : 1; //la OR de los dems bits
+    struct {        //bitfield que ocupa un byte (1 = borde detectado)
+      char ne  : 1; //bit correspondiente al sensor frontal derecho
+      char se  : 1; //bit correspondiente al sensor trasero derecho
+      char sw  : 1; //bit correspondiente al sensor trasero izquierdo
+      char nw  : 1; //bit correspondiente al sensor frontal izquierdo
+      char any : 1; //la OR de los demas bits
     } sniffers;
     
     struct {
@@ -62,10 +75,10 @@ class SubnorBot
     } sonar;
     
     struct {
-      Servo right; //objeto que controla el motor derecho
       Servo left;  //objeto que controla el motor izquierdo
-      int speedR;    //velocidad DESEADA del motor derecho, va desde -100 a +100
-      int speedL;    //velocidad DESEADA del motor derecho, va desde -100 a +100
+      Servo right; //objeto que controla el motor derecho
+      int speedL;  //velocidad DESEADA del motor izquierdo, va desde -100 a +100
+      int speedR;  //velocidad DESEADA del motor derecho, va desde -100 a +100
     } engines;
     
     int error; //codigo de error para cualquier operacion de SubnorBot

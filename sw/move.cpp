@@ -1,19 +1,18 @@
 #include "subnorbot.h"
 
-int speedToAngle(int speed);
-int angleToSpeed(int angle);
+int speedToAngle(int speed)
+{
+  return (float)speed*0.9 + 90;
+}
 
 void SubnorBot::move()
-{    
+{
+  engines.left.write(speedToAngle(engines.speedL));
   engines.right.write(speedToAngle(engines.speedR));
 }
 
-int speedToAngle(int speed)
+void SubnorBot::setSpeed(int l, int r)
 {
-  return ((float)speed*0.9 + 90);
-}
-
-int angleToSpeed(int angle)
-{
-  return ((/9)*10);
+  engines.speedL = l;
+  engines.speedR = r;
 }
