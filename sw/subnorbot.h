@@ -6,23 +6,28 @@
 #include <Servo.h>
 
 /** Constantes */
-//Siguelineas:
+//Pines de los siguelineas:
 #define PIN_SNIFFER_NE  4
 #define PIN_SNIFFER_SE  5
 #define PIN_SNIFFER_SW  6
 #define PIN_SNIFFER_NW  7
+//Pin de la interrupcion externa de los siguelineas:
 #define PIN_SNIFFER_INT 8
-//Ultrasonidos:
+//Pines del sonar:
 #define PIN_SONAR_TRIGGER 2
 #define PIN_SONAR_ECHO    3
+//Diametro del ring:
 #define DOJO_DIAMMETER    75
-//Motores:
+//Pines de los PWMs de los motores:
 #define PIN_ENGINE_R 9
 #define PIN_ENGINE_L 10
-#define ENGINES_SPEED_CORRECTION 0
+//Correcion de la diferencia de velocidad de los motores, para todos los movimientos (avanzar, girar, etc)
+//(numero entre 0 y 1 que multiplica a la velocidad de ambos motores):
+#define LEFT_SPEED_CORRECTION 1
+#define RIGHT_SPEED_CORRECTION 1
 
 /** Tipos */
-typedef enum {RIGHT, LEFT} Side;
+typedef enum {LEFT, RIGHT} Side;
 
 /** Clase SubnorBot
  *

@@ -13,6 +13,6 @@ void SubnorBot::move()
 
 void SubnorBot::setSpeed(int l, int r)
 {
-  engines.speedL = l - ENGINE_SPEED_CORRECTION;
-  engines.speedR = r + ENGINE_SPEED_CORRECTION;
+  engines.speedL = l * LEFT_SPEED_CORRECTION;
+  engines.speedR = r * RIGHT_SPEED_CORRECTION;
 }
