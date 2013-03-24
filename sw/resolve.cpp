@@ -1,49 +1,40 @@
 #include "subnorbot.h"
 
-typedef enum {
-  Searching,
-  Charging
-} State;
-
-void _printVector(int x, int y)
-{
-    Serial.write("(");
-    Serial.print((int)((float)x*0.9 + 90));
-    Serial.write(",");
-    Serial.print((int)((float)y*0.9 + 90));
-    Serial.write(")\n");
-}
-
 void SubnorBot::resolve()
-{  
-  static int i = -100;
+{
+  //Definicion de los estados de la maquina de estados:
+  static enum {
+    SEARCHING,
+    CHARGING
+  } state = SEARCHING;
   
-  if (i>100) {
-    i = -100;
-    Serial.write("\n");
-  }
-  else {
-    aproach();
-    Serial.print(i);
-    _printVector(engines.speedL, engines.speedR);
-    i++;
+  //Maquina de estados finitos, nucleo de la IA:
+  switch (state) {
+    case SEARCHING:
+    break;
+    
+    case CHARGING:
+    break;
   }
 }
 
 void SubnorBot::rotate(Side side)
 {
-  if (side = L)
-    setSpeed(-25, 25);
+  if (side = LEFT)
+    setSpeed(-50, 50);
   else
-    setSpeed(25, -25);
+    setSpeed(50, -50);
 }
 
 void SubnorBot::pivot(Side side)
 {
-  //...
+  if (side = LEFT)
+    setSpeed(0, 100);
+  else
+    setSpeed(100, 0);
 }
 
-void SubnorBot::aproach()
+void SubnorBot::approach()
 {
   setSpeed(25, 25);
 }
@@ -53,7 +44,12 @@ void SubnorBot::charge()
   setSpeed(100, 100);
 }
 
-void SubnorBot::evade()
+/******* depuracion *******/
+void _printVector(int x, int y)
 {
-  //...
+    Serial.write("(");
+    Serial.print((int)((float)x*0.9 + 90));
+    Serial.write(",");
+    Serial.print((int)((float)y*0.9 + 90));
+    Serial.write(")\n");
 }

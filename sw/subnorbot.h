@@ -5,9 +5,7 @@
 #include <NewPing.h>
 #include <Servo.h>
 
-/** Constantes
- *
- */
+/** Constantes */
 //Siguelineas:
 #define PIN_SNIFFER_NE  4
 #define PIN_SNIFFER_SE  5
@@ -22,10 +20,8 @@
 #define PIN_ENGINE_R 9
 #define PIN_ENGINE_L 10
 
-/** Tipos
- *
- */
-typedef enum {R, L} Side;
+/** Tipos */
+typedef enum {RIGHT, LEFT} Side;
 
 /** Clase SubnorBot
  *
@@ -52,10 +48,8 @@ class SubnorBot {
     //Metodos relacionados con la IA (implementados en resolve.cpp):
     void rotate(Side side); //rotacion sobre si mismo
     void pivot(Side side);  //pivotar hacia la derecha (sobre una rueda)
-    void aproach();         //acercamiento a baja velocidad al rival
+    void approach();         //acercamiento a baja velocidad al rival
     void charge();          //carga y empuje contra el rival a toda velocidad
-    void evade();           //escapar de la pelea al derectar un borde
-    void runAway();         //huir del enemigo marcha atras
     
     //Metodos relacionados con los motores (implementados en move.cpp):
     void setSpeed(int l, int r); //Establece una velocidad en ambos motores
