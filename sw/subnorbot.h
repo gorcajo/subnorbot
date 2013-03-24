@@ -21,8 +21,8 @@
 #define PIN_SONAR_ECHO    3
 #define DOJO_DIAMMETER    75
 //Motores:
-#define PIN_ENGINE_R 10
-#define PIN_ENGINE_L 11
+#define PIN_ENGINE_R 9
+#define PIN_ENGINE_L 10
 
 /** Clase SubnorBot
  *
@@ -62,8 +62,8 @@ class SubnorBot
     } sonar;
     
     struct {
-      Servo right(); //objeto que controla el motor derecho
-      Servo left();  //objeto que controla el motor izquierdo
+      Servo right; //objeto que controla el motor derecho
+      Servo left;  //objeto que controla el motor izquierdo
       int speedR;    //velocidad DESEADA del motor derecho, va desde -100 a +100
       int speedL;    //velocidad DESEADA del motor derecho, va desde -100 a +100
     } engines;

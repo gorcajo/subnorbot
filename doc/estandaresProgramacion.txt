@@ -4,7 +4,8 @@ Estandar de indentificadores
 
 ClassOrType
 propertyOrMethod
-_parameterOfAMethodOrFunction
+parameterOfAFunction
+_parameterOfAMethod
 _localVariable
 _localFunction
 CONSTANT_OR_GLOBAL_VARIABLE

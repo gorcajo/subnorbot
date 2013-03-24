@@ -19,6 +19,10 @@ void SubnorBot::initialize()
   //Inicializacion de las velocidades deseadas de los motores:
   engines.speedR = 0;
   engines.speedL = 0;
+  if (!engines.right.attached())
+    engines.right.attach(PIN_ENGINE_R);
+  if (!engines.left.attached())
+    engines.left.attach(PIN_ENGINE_L);
   
   //Codigo de error:
   error = 0;
