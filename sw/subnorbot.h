@@ -19,6 +19,7 @@
 //Motores:
 #define PIN_ENGINE_R 9
 #define PIN_ENGINE_L 10
+#define ENGINES_SPEED_CORRECTION 0
 
 /** Tipos */
 typedef enum {RIGHT, LEFT} Side;
@@ -46,10 +47,9 @@ class SubnorBot {
     void setSniffers(boolean _ne, boolean _se, boolean _sw, boolean _nw); //almacena el estado de los siguelineas
     
     //Metodos relacionados con la IA (implementados en resolve.cpp):
-    void rotate(Side side); //rotacion sobre si mismo
-    void pivot(Side side);  //pivotar hacia la derecha (sobre una rueda)
-    void approach();         //acercamiento a baja velocidad al rival
-    void charge();          //carga y empuje contra el rival a toda velocidad
+    void rotate(Side side);  //rotacion sobre si mismo, destinado a buscar al rival
+    void pivot(Side side);   //pivotar hacia la derecha (sobre una rueda), destinado a maniobrar en contacto con el rival
+    void goAhead(int speed); //carga y empuje contra el rival a toda velocidad
     
     //Metodos relacionados con los motores (implementados en move.cpp):
     void setSpeed(int l, int r); //Establece una velocidad en ambos motores

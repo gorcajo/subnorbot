@@ -1,5 +1,15 @@
 #include "subnorbot.h"
 
+/******* depuracion *******/
+/*void _printVector(int x, int y)
+{
+    Serial.write("(");
+    Serial.print((int)((float)x*0.9 + 90));
+    Serial.write(",");
+    Serial.print((int)((float)y*0.9 + 90));
+    Serial.write(")\n");
+}*/
+
 void SubnorBot::resolve()
 {
   //Definicion de los estados de la maquina de estados:
@@ -11,9 +21,17 @@ void SubnorBot::resolve()
   //Maquina de estados finitos, nucleo de la IA:
   switch (state) {
     case SEARCHING:
+      if (sonar.dist == -1)
+        rotate(LEFT);
+      else
+        state = CHARGING;
     break;
     
     case CHARGING:
+      if (sonar.dist == -1)
+        state = SEARCHING;
+      else
+        goAhead(100);
     break;
   }
 }
@@ -21,9 +39,9 @@ void SubnorBot::resolve()
 void SubnorBot::rotate(Side side)
 {
   if (side = LEFT)
-    setSpeed(-50, 50);
+    setSpeed(-100, 100);
   else
-    setSpeed(50, -50);
+    setSpeed(100, -100);
 }
 
 void SubnorBot::pivot(Side side)
@@ -34,22 +52,7 @@ void SubnorBot::pivot(Side side)
     setSpeed(100, 0);
 }
 
-void SubnorBot::approach()
+void SubnorBot::goAhead(int speed)
 {
-  setSpeed(25, 25);
-}
-
-void SubnorBot::charge()
-{
-  setSpeed(100, 100);
-}
-
-/******* depuracion *******/
-void _printVector(int x, int y)
-{
-    Serial.write("(");
-    Serial.print((int)((float)x*0.9 + 90));
-    Serial.write(",");
-    Serial.print((int)((float)y*0.9 + 90));
-    Serial.write(")\n");
+  setSpeed(speed, speed);
 }

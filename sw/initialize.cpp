@@ -28,7 +28,7 @@ void SubnorBot::initialize()
   error = 0;
   
   /******* depuracion *******/
-  Serial.begin(9600);
+  //Serial.begin(9600);
   
   //Espera de 5s menos el tiempo que ha llevado ejecutar este metodo:
   delay(5000 - (millis() - _startTime));
