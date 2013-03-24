@@ -25,5 +25,5 @@ isr_siguelineas_bla_bla_bla()
 {
   bot.setSniffers(sensor_ne, sensor_se, sensor_sw, sensor_nw)
 }
- * y a lo mismo se puede meter la ISR dentro de la clase SubnorBot
+ * y a lo mismo se puede meter la ISR dentro de la clase SubnorBot, como metodo
  */

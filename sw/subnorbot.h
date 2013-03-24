@@ -5,6 +5,25 @@
 #include <NewPing.h>
 #include <Servo.h>
 
+/** Constantes
+ *
+ * Macros numericas relacionadas con el hardware.
+ *
+ */
+//Siguelineas:
+#define PIN_SNIFFER_NE  4
+#define PIN_SNIFFER_SE  5
+#define PIN_SNIFFER_SW  6
+#define PIN_SNIFFER_NW  7
+#define PIN_SNIFFER_INT 8
+//Ultrasonidos:
+#define PIN_SONAR_TRIGGER 2
+#define PIN_SONAR_ECHO    3
+#define DOJO_DIAMMETER    75
+//Motores:
+#define PIN_ENGINE_R 10
+#define PIN_ENGINE_L 11
+
 /** Clase SubnorBot
  *
  * Manejo completo del robot. Su unica instancia se realiza como variable
