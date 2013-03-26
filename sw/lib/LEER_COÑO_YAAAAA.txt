@@ -1,0 +1,5 @@
+Estas librerias son las utilizadas en la clase SubnorBot, pero no son ESTOS los ficheros que se cogen en el código.
+
+Servo es oficial. No hay más.
+
+NewPing, que maneja el sonar, no es oficial y hay que meterlo junto con las librerias OFICIALES de arduino (es decir, no en el sketchbook, sino junto con Servo y compañía).
