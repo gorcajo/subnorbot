@@ -13,3 +13,7 @@ MACRO
 ENUM_ELEMENT
 
 (todo en inglés, ¿comentarios incluídos?)
+<<<<<<< HEAD
+- even comments
+=======
+>>>>>>> 7746343ddef0e8d09520fc818a25bb4128675bb8
