@@ -9,6 +9,8 @@ SubnorBot bot = SubnorBot();
 
 void setup()
 {
+  /******* depuracion *******
+  Serial.begin(9600);*/
   bot.initialize();
 }
 
@@ -17,6 +19,13 @@ void loop()
   bot.sense();
   bot.resolve();
   bot.move();
+  
+  /******* depuracion *******
+  static unsigned long _time = millis() + 1000;
+  static unsigned long i = 50;
+  if (millis() < _time)
+    Serial.println(i);
+  i++;*/
 }
 
 /* aqui la rutina de atencion a la interrupcion de los siguelineas,

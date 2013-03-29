@@ -7,12 +7,12 @@ int speedToAngle(int speed)
 
 void SubnorBot::move()
 {
-  engines.left.write(speedToAngle(engines.speedL));
-  engines.right.write(speedToAngle(engines.speedR));
+  engines.left.write(engines.speedL);
+  engines.right.write(engines.speedR);
 }
 
 void SubnorBot::setSpeed(int l, int r)
 {
-  engines.speedL = l * LEFT_SPEED_CORRECTION;
-  engines.speedR = r * RIGHT_SPEED_CORRECTION;
+  engines.speedL = speedToAngle(l * LEFT_SPEED_CORRECTION);
+  engines.speedR = speedToAngle(r * RIGHT_SPEED_CORRECTION);
 }

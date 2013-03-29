@@ -5,7 +5,9 @@
 #include <NewPing.h>
 #include <Servo.h>
 
-/** Constantes */
+/** Constantes, centralizadas aqui */
+//Tiempo, en milisegundos, de la espera inicial al arranque:
+#define IDLE_TIME 100
 //Pines de los siguelineas:
 #define PIN_SNIFFER_NE  4
 #define PIN_SNIFFER_SE  5
@@ -18,6 +20,9 @@
 #define PIN_SONAR_ECHO    3
 //Diametro del ring:
 #define DOJO_DIAMMETER    75
+//Bara los barridos del estado REFINDING, de la maquina de estados en SubnorBot.resolve()
+#define SWEEPS 6        //numero de barridos en el estado REFINDING
+#define SWEEP_TIME 2000 //tiempo de cada barrido, en milisegundos
 //Pines de los PWMs de los motores:
 #define PIN_ENGINE_R 9
 #define PIN_ENGINE_L 10
@@ -57,7 +62,7 @@ class SubnorBot {
     void goAhead(int speed); //carga y empuje contra el rival a toda velocidad
     
     //Metodos relacionados con los motores (implementados en move.cpp):
-    void setSpeed(int l, int r); //Establece una velocidad en ambos motores
+    void setSpeed(int l, int r); //Establece una velocidad DESEADA, en ambos motores, los parametros -100 a +100
 
   private:
     struct {        //bitfield que ocupa un byte (1 = borde detectado)
@@ -76,8 +81,8 @@ class SubnorBot {
     struct {
       Servo left;  //objeto que controla el motor izquierdo
       Servo right; //objeto que controla el motor derecho
-      int speedL;  //velocidad DESEADA del motor izquierdo, va desde -100 a +100
-      int speedR;  //velocidad DESEADA del motor derecho, va desde -100 a +100
+      int speedL;  //velocidad DESEADA del motor izquierdo, va desde 0 a 180
+      int speedR;  //velocidad DESEADA del motor derecho, va desde 0 a 180
     } engines;
     
     int error; //codigo de error para cualquier operacion de SubnorBot
