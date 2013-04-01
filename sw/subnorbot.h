@@ -65,13 +65,16 @@ class SubnorBot {
     void setSpeed(int l, int r); //Establece una velocidad DESEADA, en ambos motores, los parametros -100 a +100
 
   private:
+  union {
     struct {        //bitfield que ocupa un byte (1 = borde detectado)
-      char ne  : 1; //bit correspondiente al sensor frontal derecho
-      char se  : 1; //bit correspondiente al sensor trasero derecho
-      char sw  : 1; //bit correspondiente al sensor trasero izquierdo
-      char nw  : 1; //bit correspondiente al sensor frontal izquierdo
-      char any : 1; //la OR de los demas bits
-    } sniffers;
+      char ne : 1; //bit (LSB) correspondiente al sensor frontal derecho
+      char se : 1; //bit correspondiente al sensor trasero derecho
+      char sw : 1; //bit correspondiente al sensor trasero izquierdo
+      char nw : 1; //bit correspondiente al sensor frontal izquierdo
+    } bits;
+    char byte; //para acceder al byte entero del bitfield
+    char any;  //la misma forma de acceder al bitfield pero con otro nombre, por legibilidad del codigo
+  } sniffers;
     
     struct {
       NewPing *obj; //puntero al objeto que controla el sonar (es un puntero porque la clase NewPing tiene un constructor de mierda)

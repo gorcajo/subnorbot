@@ -6,11 +6,10 @@ void SubnorBot::initialize()
   unsigned long _startTime = millis();
   
   //Inicializacion del estado de los siguelineas:
-  sniffers.ne = 0;
-  sniffers.se = 0;
-  sniffers.sw = 0;
-  sniffers.nw = 0;
-  sniffers.any = 0;
+  sniffers.bits.ne = 0;
+  sniffers.bits.se = 0;
+  sniffers.bits.sw = 0;
+  sniffers.bits.nw = 0;
   
   //Inicializacion del sonar:
   sonar.obj = new NewPing(PIN_SONAR_TRIGGER, PIN_SONAR_ECHO, DOJO_DIAMMETER);
