@@ -12,3 +12,10 @@ void SubnorBot::sense()
   sniffers.bits.nw = _nw;*/
 #endif
 }
+
+#ifdef TEST
+void SubnorBot::setDistance(int d)
+{
+  sonar.dist = d;
+}
+#endif

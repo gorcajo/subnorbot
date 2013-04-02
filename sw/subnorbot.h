@@ -88,7 +88,8 @@ class SubnorBot {
     void reverse(unsigned int speed); //retroceso
     
 #ifdef TEST
-    //Metodos unicamente para test:
+    //Metodos unicamente para el modo test:
+    void setDistance(int d);  //establece la distancia al rival
     State getState();         //devuelve el estado de la maquina de estados de la IA
     int getSpeed(Side side);  //devuelve la velocidad, entre -100 y 100, de uno de los motores
 #endif

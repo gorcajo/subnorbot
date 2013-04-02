@@ -18,6 +18,7 @@ void setup()
   
 #ifdef TEST
   Serial.println("Fin espera de 5s.");
+  Serial.print("Contando iteraciones del main loop en 1s... ");
 #endif
 }
 
@@ -28,17 +29,35 @@ void loop()
   bot.move();
   
 #ifdef TEST
+  static boolean _crono = true;
   static unsigned long _time = millis() + 1000;
-  static unsigned long i = 1;
-  static char cmd;
+  static unsigned long _i = 1;
+  static char _cmd;
   
-  if (millis() < _time) {
-    Serial.println(i);
-    i++;
+  if (_crono) {
+    if (millis() < _time) {
+      _i++;
+    }
+    else {
+      _crono = false;
+      Serial.print(_i);
+      Serial.println(" iteraciones.");
+      Serial.println("Atendiendo a comandos.");
+    }
   }
   else {
-    cmd = Serial.read();
-    switch (cmd) {
+    _cmd = Serial.read();
+    switch (_cmd) {
+      case 'o':
+        bot.setDistance(3);
+        Serial.println("Rival detectado!");
+      break;
+      
+      case 'x':
+        bot.setDistance(-1);
+        Serial.println("Rival perdido...");
+      break;
+      
       case 'e':
         Serial.print("Motores: [L = ");
         Serial.print(bot.getSpeed(LEFT));
@@ -50,18 +69,18 @@ void loop()
       case 's':
         Serial.print("Estado: ");
         switch (bot.getState()) {
-          case IDLE:          Serial.print("IDLE");          break;
-          case SEARCHING:     Serial.print("SEARCHING");     break;
-          case CHARGING:      Serial.print("CHARGING");      break;
-          case REFINDING:     Serial.print("REFINDING");     break;
-          case AVOIDING_EDGE: Serial.print("AVOIDING_EDGE"); break;
-          default:            Serial.print("(desconocido)"); 
+          case IDLE:          Serial.println("IDLE");          break;
+          case SEARCHING:     Serial.println("SEARCHING");     break;
+          case CHARGING:      Serial.println("CHARGING");      break;
+          case REFINDING:     Serial.println("REFINDING");     break;
+          case AVOIDING_EDGE: Serial.println("AVOIDING_EDGE"); break;
+          default:            Serial.println("(desconocido)"); 
         }
       break;
       
-      default:
-      break;
+      default: break;
     }
+    
     Serial.flush();
   }
 #endif
