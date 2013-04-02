@@ -43,6 +43,7 @@ void loop()
       Serial.print(_i);
       Serial.println(" iteraciones.");
       Serial.println("Atendiendo a comandos.");
+      Serial.println();
     }
   }
   else {
@@ -51,23 +52,17 @@ void loop()
       case 'o':
         bot.setDistance(3);
         Serial.println("Rival detectado!");
+        Serial.println();
       break;
       
       case 'x':
         bot.setDistance(-1);
         Serial.println("Rival perdido...");
-      break;
-      
-      case 'e':
-        Serial.print("Motores: [L = ");
-        Serial.print(bot.getSpeed(LEFT));
-        Serial.print("] [R = ");
-        Serial.print(bot.getSpeed(RIGHT));
-        Serial.println("]");
+        Serial.println();
       break;
       
       case 's':
-        Serial.print("Estado: ");
+        Serial.print("* Estado: ");
         switch (bot.getState()) {
           case IDLE:          Serial.println("IDLE");          break;
           case SEARCHING:     Serial.println("SEARCHING");     break;
@@ -76,6 +71,11 @@ void loop()
           case AVOIDING_EDGE: Serial.println("AVOIDING_EDGE"); break;
           default:            Serial.println("(desconocido)"); 
         }
+        Serial.print("* Motor Izq.: ");
+        Serial.println(bot.getSpeed(LEFT));
+        Serial.print("* Motor Dch.: ");
+        Serial.println(bot.getSpeed(RIGHT));
+        Serial.println();
       break;
       
       default: break;
