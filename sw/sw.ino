@@ -9,9 +9,16 @@ SubnorBot bot = SubnorBot();
 
 void setup()
 {
-  /******* depuracion *******
-  Serial.begin(9600);*/
+#ifdef TEST
+  Serial.begin(9600);
+  Serial.println("Comenzando...");
+#endif
+
   bot.initialize();
+  
+#ifdef TEST
+  Serial.println("Fin espera de 5s.");
+#endif
 }
 
 void loop()
@@ -20,19 +27,11 @@ void loop()
   bot.resolve();
   bot.move();
   
-  /******* depuracion *******
+#ifdef TEST
   static unsigned long _time = millis() + 1000;
-  static unsigned long i = 50;
+  static unsigned long i = 1;
   if (millis() < _time)
     Serial.println(i);
-  i++;*/
+  i++;
+#endif
 }
-
-/* aqui la rutina de atencion a la interrupcion de los siguelineas,
- * algo asi como...
-isr_siguelineas_bla_bla_bla()
-{
-  bot.setSniffers(sensor_ne, sensor_se, sensor_sw, sensor_nw)
-}
- * y a lo mismo se puede meter la ISR dentro de la clase SubnorBot, como metodo
- */

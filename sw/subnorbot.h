@@ -6,8 +6,10 @@
 #include <Servo.h>
 
 /** Constantes, centralizadas aqui */
+//Para realizar pruebas
+#define TEST
 //Tiempo, en milisegundos, de la espera inicial al arranque:
-#define IDLE_TIME 100
+#define IDLE_TIME 5000
 //Pines de los siguelineas:
 #define PIN_SNIFFER_NE  4
 #define PIN_SNIFFER_SE  5
@@ -53,15 +55,12 @@ class SubnorBot {
     void resolve(); //Procesa la informacion de sense() y toma decisiones
     void move();    //Segun las decisiones de resolve() realiza el manejo de los motores
     
-    //Metodos relacionados con los sensores (implementados en sense.cpp):
-    void setSniffers(boolean _ne, boolean _se, boolean _sw, boolean _nw); //almacena el estado de los siguelineas
-    
     //Metodos relacionados con la IA (implementados en resolve.cpp):
     void rotate(Side side);  //rotacion sobre si mismo, destinado a buscar al rival
     void pivot(Side side);   //pivotar hacia la derecha (sobre una rueda), destinado a maniobrar en contacto con el rival
     void goAhead(int speed); //carga y empuje contra el rival a toda velocidad
     
-    //Metodos relacionados con los motores (implementados en move.cpp):
+    //Metodos relacionados con los motores y actuadores (implementados en move.cpp):
     void setSpeed(int l, int r); //Establece una velocidad DESEADA, en ambos motores, los parametros -100 a +100
 
   private:
