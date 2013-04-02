@@ -30,8 +30,39 @@ void loop()
 #ifdef TEST
   static unsigned long _time = millis() + 1000;
   static unsigned long i = 1;
-  if (millis() < _time)
+  static char cmd;
+  
+  if (millis() < _time) {
     Serial.println(i);
-  i++;
+    i++;
+  }
+  else {
+    cmd = Serial.read();
+    switch (cmd) {
+      case 'e':
+        Serial.print("Motores: [L = ");
+        Serial.print(bot.getSpeed(LEFT));
+        Serial.print("] [R = ");
+        Serial.print(bot.getSpeed(RIGHT));
+        Serial.println("]");
+      break;
+      
+      case 's':
+        Serial.print("Estado: ");
+        switch (bot.getState()) {
+          case IDLE:          Serial.print("IDLE");          break;
+          case SEARCHING:     Serial.print("SEARCHING");     break;
+          case CHARGING:      Serial.print("CHARGING");      break;
+          case REFINDING:     Serial.print("REFINDING");     break;
+          case AVOIDING_EDGE: Serial.print("AVOIDING_EDGE"); break;
+          default:            Serial.print("(desconocido)"); 
+        }
+      break;
+      
+      default:
+      break;
+    }
+    Serial.flush();
+  }
 #endif
 }

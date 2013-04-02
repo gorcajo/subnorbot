@@ -22,7 +22,7 @@ void SubnorBot::resolve()
     /**************************************************/
     case CHARGING:
       if (sonar.dist != -1) {
-        goAhead(100);
+        forward(100);
       }
       else if (sniffers.any)
         state = AVOIDING_EDGE;
@@ -59,13 +59,13 @@ void SubnorBot::resolve()
           case 0x01: //solo el sensor ne
           case 0x08: //solo el sensor nw
           case 0x09: //solo los sensores ne y nw
-            goAhead(-100);
+            reverse(100);
           break;
           
           case 0x02: //solo el sensor se
           case 0x04: //solo el sensor sw
           case 0x06: //solo los sensores se y sw
-            goAhead(100);
+            forward(100);
           break;
           
           case 0x03: //solo los sensores ne y se
@@ -92,7 +92,7 @@ void SubnorBot::resolve()
 
 void SubnorBot::rotate(Side side)
 {
-  if (side = LEFT)
+  if (side == LEFT)
     setSpeed(-100, 100);
   else
     setSpeed(100, -100);
@@ -106,7 +106,19 @@ void SubnorBot::pivot(Side side)
     setSpeed(100, 0);
 }
 
-void SubnorBot::goAhead(int speed)
+void SubnorBot::forward(unsigned int speed)
 {
   setSpeed(speed, speed);
 }
+
+void SubnorBot::reverse(unsigned int speed)
+{
+  setSpeed(-speed, -speed);
+}
+
+#ifdef TEST
+State SubnorBot::getState()
+{
+  return state;
+}
+#endif

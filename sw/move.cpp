@@ -1,10 +1,5 @@
 #include "subnorbot.h"
 
-int speedToAngle(int speed)
-{
-  return (float)speed*0.9 + 90;
-}
-
 void SubnorBot::move()
 {
   engines.left.write(engines.speedL);
@@ -13,8 +8,8 @@ void SubnorBot::move()
 
 void SubnorBot::setSpeed(int l, int r)
 {
-  engines.speedL = speedToAngle(l * LEFT_SPEED_CORRECTION);
-  engines.speedR = speedToAngle(r * RIGHT_SPEED_CORRECTION);
+  engines.speedL = (l * LEFT_SPEED_CORRECTION)*0.9 + 90;
+  engines.speedR = (r * RIGHT_SPEED_CORRECTION)*0.9 + 90;
 }
 
 void SubnorBot::setLED()
@@ -56,3 +51,13 @@ void SubnorBot::setLED()
       digitalWrite(PIN_LED_B, LOW);
   }
 }
+
+#ifdef TEST
+int SubnorBot::getSpeed(Side side)
+{
+  if (side == LEFT)
+    return (engines.speedL - 90)/0.9;
+  else
+    return (engines.speedR - 90)/0.9;
+}
+#endif

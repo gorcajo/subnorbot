@@ -16,14 +16,13 @@ void SubnorBot::initialize()
   sonar.dist = -1;
   
   //Inicializacion de las velocidades deseadas de los motores:
-  engines.speedL = 0;
-  engines.speedR = 0;
+  setSpeed(0, 0);
   if (!engines.left.attached())
     engines.left.attach(PIN_ENGINE_L);
   if (!engines.right.attached())
     engines.right.attach(PIN_ENGINE_R);
   
-  //Estado actual de la maquina de estados:
+  //Estado inicial de la maquina de estados:
   state = IDLE;
   setLED();
   
@@ -32,4 +31,8 @@ void SubnorBot::initialize()
   
   //Espera de 5s menos el tiempo que ha llevado ejecutar este metodo:
   delay(IDLE_TIME - (millis() - _startTime));
+  
+  //Estado actual de la maquina de estados:
+  state = SEARCHING;
+  setLED();
 }

@@ -9,7 +9,11 @@
 //Para realizar pruebas
 #define TEST
 //Tiempo, en milisegundos, de la espera inicial al arranque:
-#define IDLE_TIME 5000
+#ifdef TEST
+  #define IDLE_TIME 100
+#else
+  #define IDLE_TIME 5000
+#endif
 //Pines de los siguelineas:
 #define PIN_SNIFFER_NE  2
 #define PIN_SNIFFER_SE  3
@@ -52,7 +56,7 @@ typedef enum {
  */
 typedef enum {
   IDLE,         //estado de reposo, cuando aun no se ha ejecutado ninguna vez la maquina de estados
-  SEARCHING,    //gira sobre si mismo buscando al rival
+  SEARCHING,    //estado inicial, gira sobre si mismo buscando al rival
   CHARGING,     //se dirige hacia el rival y le empuja a toda velocidad
   REFINDING,    //cuando se pierde de vista al rival, realizara una busqueda barriendo en un cono de accion, durante un tiempo limitado
   AVOIDING_EDGE //corrige la posicion en el caso de encontrar un borde
@@ -78,9 +82,16 @@ class SubnorBot {
     void move();    //Segun las decisiones de resolve() realiza el manejo de los motores
     
     //Metodos relacionados con la IA (implementados en resolve.cpp):
-    void rotate(Side side);  //rotacion sobre si mismo, destinado a buscar al rival
-    void pivot(Side side);   //pivotar hacia la derecha (sobre una rueda), destinado a maniobrar en contacto con el rival
-    void goAhead(int speed); //carga y empuje contra el rival a toda velocidad
+    void rotate(Side side);           //rotacion sobre si mismo, destinado a buscar al rival
+    void pivot(Side side);            //pivotar hacia la derecha (sobre una rueda), destinado a maniobrar en contacto con el rival
+    void forward(unsigned int speed); //avance
+    void reverse(unsigned int speed); //retroceso
+    
+#ifdef TEST
+    //Metodos unicamente para test:
+    State getState();         //devuelve el estado de la maquina de estados de la IA
+    int getSpeed(Side side);  //devuelve la velocidad, entre -100 y 100, de uno de los motores
+#endif
     
     //Metodos relacionados con los motores y actuadores (implementados en move.cpp):
     void setSpeed(int l, int r); //Establece una velocidad DESEADA, en ambos motores, los parametros -100 a +100
