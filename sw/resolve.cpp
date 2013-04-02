@@ -2,14 +2,6 @@
 
 void SubnorBot::resolve()
 {
-  //Definicion de los estados de la maquina de estados:
-  static enum {
-    SEARCHING,    //gira sobre si mismo buscando al rival
-    CHARGING,     //se dirige hacia el rival y le empuja a toda velocidad
-    REFINDING,    //cuando se pierde de vista al rival, realizara una busqueda barriendo en un cono de accion, durante un tiempo limitado
-    AVOIDING_EDGE //corrige la posicion en el caso de encontrar un borde
-  } state = SEARCHING;
-  
   //Variables para almacenar tiempos:
   static unsigned long _startTime = 0;
   static unsigned long _diffTime = 0;
@@ -94,6 +86,8 @@ void SubnorBot::resolve()
     break;
     /**************************************************/
   }
+  
+  setLED();
 }
 
 void SubnorBot::rotate(Side side)

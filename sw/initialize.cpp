@@ -23,6 +23,10 @@ void SubnorBot::initialize()
   if (!engines.right.attached())
     engines.right.attach(PIN_ENGINE_R);
   
+  //Estado actual de la maquina de estados:
+  state = IDLE;
+  setLED();
+  
   //Codigo de error:
   error = 0;
   

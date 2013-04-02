@@ -11,15 +11,13 @@
 //Tiempo, en milisegundos, de la espera inicial al arranque:
 #define IDLE_TIME 5000
 //Pines de los siguelineas:
-#define PIN_SNIFFER_NE  4
-#define PIN_SNIFFER_SE  5
-#define PIN_SNIFFER_SW  6
-#define PIN_SNIFFER_NW  7
-//Pin de la interrupcion externa de los siguelineas:
-#define PIN_SNIFFER_INT 8
+#define PIN_SNIFFER_NE  2
+#define PIN_SNIFFER_SE  3
+#define PIN_SNIFFER_SW  4
+#define PIN_SNIFFER_NW  5
 //Pines del sonar:
-#define PIN_SONAR_TRIGGER 2
-#define PIN_SONAR_ECHO    3
+#define PIN_SONAR_TRIGGER 11
+#define PIN_SONAR_ECHO    12
 //Diametro del ring:
 #define DOJO_DIAMMETER    75
 //Bara los barridos del estado REFINDING, de la maquina de estados en SubnorBot.resolve()
@@ -28,13 +26,37 @@
 //Pines de los PWMs de los motores:
 #define PIN_ENGINE_R 9
 #define PIN_ENGINE_L 10
+//Pines del LED RGB indicador de estado:
+#define PIN_LED_R 6
+#define PIN_LED_G 7
+#define PIN_LED_B 8
 //Correcion de la diferencia de velocidad de los motores, para todos los movimientos (avanzar, girar, etc)
 //(numero entre 0 y 1 que multiplica a la velocidad de ambos motores):
 #define LEFT_SPEED_CORRECTION 1
 #define RIGHT_SPEED_CORRECTION 1
 
-/** Tipos */
-typedef enum {LEFT, RIGHT} Side;
+/** Tipo Side
+ *
+ * Para definir los laterales.
+ *
+ */
+typedef enum {
+  LEFT,
+  RIGHT
+} Side;
+
+/** Tipo State
+ *
+ * Para definir los estados de la maquina de estados correspondiente a la IA
+ *
+ */
+typedef enum {
+  IDLE,         //estado de reposo, cuando aun no se ha ejecutado ninguna vez la maquina de estados
+  SEARCHING,    //gira sobre si mismo buscando al rival
+  CHARGING,     //se dirige hacia el rival y le empuja a toda velocidad
+  REFINDING,    //cuando se pierde de vista al rival, realizara una busqueda barriendo en un cono de accion, durante un tiempo limitado
+  AVOIDING_EDGE //corrige la posicion en el caso de encontrar un borde
+} State;
 
 /** Clase SubnorBot
  *
@@ -62,6 +84,7 @@ class SubnorBot {
     
     //Metodos relacionados con los motores y actuadores (implementados en move.cpp):
     void setSpeed(int l, int r); //Establece una velocidad DESEADA, en ambos motores, los parametros -100 a +100
+    void setLED();               //Establece un color de 3 bits de profundidad en el LED RGB, segun el estado de la maquina de estados de la IA
 
   private:
   union {
@@ -87,7 +110,8 @@ class SubnorBot {
       int speedR;  //velocidad DESEADA del motor derecho, va desde 0 a 180
     } engines;
     
-    int error; //codigo de error para cualquier operacion de SubnorBot
+    State state; //el estado de la maquina de estados de la IA
+    int error;   //codigo de error para cualquier operacion de SubnorBot
 };
 
 #endif //SUBNORBOT_H
