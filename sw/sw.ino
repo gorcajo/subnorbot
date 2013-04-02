@@ -29,10 +29,10 @@ void loop()
   bot.move();
   
 #ifdef TEST
-  static boolean _crono = true;
-  static unsigned long _time = millis() + 1000;
-  static unsigned long _i = 1;
-  static char _cmd;
+  static boolean _crono = true;                 //flag que indica si se estan contando las iteraciones del main loop al arrancar
+  static unsigned long _time = millis() + 1000; //el instante cuando deben de dejar de contarse
+  static unsigned long _i = 1;                  //las iteraciones del main loop contadas
+  static char _cmd;                             //el comando de test recibido
   
   if (_crono) {
     if (millis() < _time) {
@@ -49,8 +49,32 @@ void loop()
   else {
     _cmd = Serial.read();
     switch (_cmd) {
+      case '1':
+        Serial.println("Siguelineas SW conmutado.");
+        bot.switchSniffers(false, false, true, false);
+        Serial.println();
+      break;
+      
+      case '3':
+        Serial.println("Siguelineas SE conmutado.");
+        bot.switchSniffers(false, true, false, false);
+        Serial.println();
+      break;
+      
+      case '7':
+        Serial.println("Siguelineas NW conmutado.");
+        bot.switchSniffers(false, false, false, true);
+        Serial.println();
+      break;
+      
+      case '9':
+        Serial.println("Siguelineas NE conmutado.");
+        bot.switchSniffers(true, false, false, false);
+        Serial.println();
+      break;
+      
       case 'o':
-        bot.setDistance(3);
+        bot.setDistance(10);
         Serial.println("Rival detectado!");
         Serial.println();
       break;
@@ -72,9 +96,22 @@ void loop()
           default:            Serial.println("(desconocido)"); 
         }
         Serial.print("* Motor Izq.: ");
-        Serial.println(bot.getSpeed(LEFT));
+        Serial.print(bot.getSpeed(LEFT));
+        Serial.println("%");
         Serial.print("* Motor Dch.: ");
-        Serial.println(bot.getSpeed(RIGHT));
+        Serial.print(bot.getSpeed(RIGHT));
+        Serial.println("%");
+        Serial.println("* Estado de los siguelineas: ");
+        Serial.println("    --");
+        Serial.print("   |");
+        if (bot.getSnifferNW()) Serial.print("x"); else Serial.print(" ");
+        if (bot.getSnifferNE()) Serial.print("x"); else Serial.print(" ");
+        Serial.println("|");
+        Serial.print("   |");
+        if (bot.getSnifferSW()) Serial.print("x"); else Serial.print(" ");
+        if (bot.getSnifferSE()) Serial.print("x"); else Serial.print(" ");
+        Serial.println("|");
+        Serial.println("    --");
         Serial.println();
       break;
       

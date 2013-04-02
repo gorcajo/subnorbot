@@ -6,10 +6,10 @@ void SubnorBot::move()
   engines.right.write(engines.speedR);
 }
 
-void SubnorBot::setSpeed(int l, int r)
+void SubnorBot::setSpeed(int _l, int _r)
 {
-  engines.speedL = (l * LEFT_SPEED_CORRECTION)*0.9 + 90;
-  engines.speedR = (r * RIGHT_SPEED_CORRECTION)*0.9 + 90;
+  engines.speedL = (_l * LEFT_SPEED_CORRECTION)*0.9 + 90;
+  engines.speedR = (_r * RIGHT_SPEED_CORRECTION)*0.9 + 90;
 }
 
 void SubnorBot::setLED()
@@ -53,9 +53,9 @@ void SubnorBot::setLED()
 }
 
 #ifdef TEST
-int SubnorBot::getSpeed(Side side)
+int SubnorBot::getSpeed(Side _side)
 {
-  if (side == LEFT)
+  if (_side == LEFT)
     return (engines.speedL - 90)/0.9;
   else
     return (engines.speedR - 90)/0.9;

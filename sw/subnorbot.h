@@ -82,20 +82,25 @@ class SubnorBot {
     void move();    //Segun las decisiones de resolve() realiza el manejo de los motores
     
     //Metodos relacionados con la IA (implementados en resolve.cpp):
-    void rotate(Side side);           //rotacion sobre si mismo, destinado a buscar al rival
-    void pivot(Side side);            //pivotar hacia la derecha (sobre una rueda), destinado a maniobrar en contacto con el rival
-    void forward(unsigned int speed); //avance
-    void reverse(unsigned int speed); //retroceso
+    void rotate(Side _side);           //rotacion sobre si mismo, destinado a buscar al rival
+    void pivot(Side _side);            //pivotar hacia la derecha (sobre una rueda), destinado a maniobrar en contacto con el rival
+    void forward(unsigned int _speed); //avance
+    void reverse(unsigned int _speed); //retroceso
     
 #ifdef TEST
     //Metodos unicamente para el modo test:
-    void setDistance(int d);  //establece la distancia al rival
+    void setDistance(int _d);  //fuerza una distancia determinada al rival en el sonar
+    void switchSniffers(boolean _ne, boolean _se, boolean _sw, boolean _nw);  //fuerza una conmutacion en el estado de los siguelineas
+    boolean getSnifferNE();   //devuelve el estado del siguelineas NE
+    boolean getSnifferSE();   //devuelve el estado del siguelineas SE
+    boolean getSnifferSW();   //devuelve el estado del siguelineas SW
+    boolean getSnifferNW();   //devuelve el estado del siguelineas NW
     State getState();         //devuelve el estado de la maquina de estados de la IA
-    int getSpeed(Side side);  //devuelve la velocidad, entre -100 y 100, de uno de los motores
+    int getSpeed(Side _side); //devuelve la velocidad, entre -100 y 100, de uno de los motores
 #endif
     
     //Metodos relacionados con los motores y actuadores (implementados en move.cpp):
-    void setSpeed(int l, int r); //Establece una velocidad DESEADA, en ambos motores, los parametros -100 a +100
+    void setSpeed(int _l, int _r); //Establece una velocidad DESEADA, en ambos motores, los parametros -100 a +100
     void setLED();               //Establece un color de 3 bits de profundidad en el LED RGB, segun el estado de la maquina de estados de la IA
 
   private:

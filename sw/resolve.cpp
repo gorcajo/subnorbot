@@ -90,30 +90,30 @@ void SubnorBot::resolve()
   setLED();
 }
 
-void SubnorBot::rotate(Side side)
+void SubnorBot::rotate(Side _side)
 {
-  if (side == LEFT)
+  if (_side == LEFT)
     setSpeed(-100, 100);
   else
     setSpeed(100, -100);
 }
 
-void SubnorBot::pivot(Side side)
+void SubnorBot::pivot(Side _side)
 {
-  if (side = LEFT)
+  if (_side == LEFT)
     setSpeed(0, 100);
   else
     setSpeed(100, 0);
 }
 
-void SubnorBot::forward(unsigned int speed)
+void SubnorBot::forward(unsigned int _speed)
 {
-  setSpeed(speed, speed);
+  setSpeed(_speed, _speed);
 }
 
-void SubnorBot::reverse(unsigned int speed)
+void SubnorBot::reverse(unsigned int _speed)
 {
-  setSpeed(-speed, -speed);
+  setSpeed(-_speed, -_speed);
 }
 
 #ifdef TEST
