@@ -51,6 +51,4 @@ boolean SubnorBot::getSnifferNW()
 {
   return sniffers.bits.nw;
 }
-
-
 #endif

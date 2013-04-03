@@ -12,7 +12,7 @@ void SubnorBot::setSpeed(int _l, int _r)
   engines.speedR = (_r * RIGHT_SPEED_CORRECTION)*0.9 + 90;
 }
 
-void SubnorBot::setLED()
+void SubnorBot::updateLED()
 {
   switch (state) {
     case IDLE: //blanco

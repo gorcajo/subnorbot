@@ -5,11 +5,12 @@ void SubnorBot::initialize()
   //Captura del tiempo actual:
   unsigned long _startTime = millis();
   
+  //Estado inicial de la maquina de estados:
+  state = IDLE;
+  updateLED();
+  
   //Inicializacion del estado de los siguelineas:
-  sniffers.bits.ne = 0;
-  sniffers.bits.se = 0;
-  sniffers.bits.sw = 0;
-  sniffers.bits.nw = 0;
+  sniffers.byte = 0;
   
   //Inicializacion del sonar:
   sonar.obj = new NewPing(PIN_SONAR_TRIGGER, PIN_SONAR_ECHO, DOJO_DIAMMETER);
@@ -22,10 +23,6 @@ void SubnorBot::initialize()
   if (!engines.right.attached())
     engines.right.attach(PIN_ENGINE_R);
   
-  //Estado inicial de la maquina de estados:
-  state = IDLE;
-  setLED();
-  
   //Codigo de error:
   error = 0;
   
@@ -34,5 +31,5 @@ void SubnorBot::initialize()
   
   //Estado actual de la maquina de estados:
   state = SEARCHING;
-  setLED();
+  updateLED();
 }

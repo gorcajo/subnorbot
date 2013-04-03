@@ -87,7 +87,7 @@ void SubnorBot::resolve()
     /**************************************************/
   }
   
-  setLED();
+  updateLED();
 }
 
 void SubnorBot::rotate(Side _side)

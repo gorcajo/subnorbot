@@ -87,6 +87,10 @@ class SubnorBot {
     void forward(unsigned int _speed); //avance
     void reverse(unsigned int _speed); //retroceso
     
+    //Metodos relacionados con los motores y actuadores (implementados en move.cpp):
+    void setSpeed(int _l, int _r); //Establece una velocidad DESEADA, en ambos motores, los parametros -100 a +100
+    void updateLED();               //Establece un color de 3 bits de profundidad en el LED RGB, segun el estado de la maquina de estados de la IA
+    
 #ifdef TEST
     //Metodos unicamente para el modo test:
     void setDistance(int _d);  //fuerza una distancia determinada al rival en el sonar
@@ -98,10 +102,6 @@ class SubnorBot {
     State getState();         //devuelve el estado de la maquina de estados de la IA
     int getSpeed(Side _side); //devuelve la velocidad, entre -100 y 100, de uno de los motores
 #endif
-    
-    //Metodos relacionados con los motores y actuadores (implementados en move.cpp):
-    void setSpeed(int _l, int _r); //Establece una velocidad DESEADA, en ambos motores, los parametros -100 a +100
-    void setLED();               //Establece un color de 3 bits de profundidad en el LED RGB, segun el estado de la maquina de estados de la IA
 
   private:
   union {
