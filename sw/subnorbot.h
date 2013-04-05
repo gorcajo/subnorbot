@@ -34,8 +34,9 @@
 #define PIN_LED_R 6
 #define PIN_LED_G 7
 #define PIN_LED_B 8
-//Correcion de la diferencia de velocidad de los motores, para todos los movimientos (avanzar, girar, etc)
-//(numero entre 0 y 1 que multiplica a la velocidad de ambos motores):
+//Correcion de la diferencia de velocidad de los motores, para todos los movimientos (avanzar, girar, etc),
+//tambien vale para corregir el sentido de giro de los motores, segun el montaje fisico de los mismos
+//(numero entre -1 y 1 que multiplica a la velocidad de ambos motores):
 #define LEFT_SPEED_CORRECTION 1
 #define RIGHT_SPEED_CORRECTION 1
 
