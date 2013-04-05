@@ -10,7 +10,7 @@
 #define TEST
 //Tiempo, en milisegundos, de la espera inicial al arranque:
 #ifdef TEST
-  #define IDLE_TIME 100
+  #define IDLE_TIME 500
 #else
   #define IDLE_TIME 5000
 #endif
