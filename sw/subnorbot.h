@@ -15,28 +15,30 @@
   #define IDLE_TIME 5000
 #endif
 //Pines de los siguelineas:
-#define PIN_SNIFFER_FL 2
-#define PIN_SNIFFER_FR 3
-#define PIN_SNIFFER_R  4
+#define PIN_SNIFFER_FL A2
+#define PIN_SNIFFER_FR A1
+#define PIN_SNIFFER_R  A0
 //Pines del sonar:
-#define PIN_SONAR_TRIGGER 11
-#define PIN_SONAR_ECHO    12
+#define PIN_SONAR_TRIGGER 6
+#define PIN_SONAR_ECHO    11
 //Diametro del ring:
 #define DOYO_DIAMMETER    75
-//Bara los barridos del estado REFINDING, de la maquina de estados en SubnorBot.resolve()
+//Bara los barridos del estado REFINDING, de la maquina de estados en SubnorBot.resolve():
 #define SWEEPS 6        //numero de barridos en el estado REFINDING
-#define SWEEP_TIME 2000 //tiempo de cada barrido, en milisegundos
+#define SWEEP_TIME 500  //tiempo de cada barrido, en milisegundos
+//Bara las maniobras de reposicionamiento al encontrar un borde, en la maquina de estados en SubnorBot.resolve():
+#define GIVING_BACK 10250 //tiempo de pivotaje para dar la espalda al borde
 //Pines de los PWMs de los motores:
-#define PIN_ENGINE_R 9
-#define PIN_ENGINE_L 10
+#define PIN_ENGINE_L 9
+#define PIN_ENGINE_R 10
 //Pines del LED RGB indicador de estado:
-#define PIN_LED_R 6
-#define PIN_LED_G 7
-#define PIN_LED_B 8
+#define PIN_LED_R 2
+#define PIN_LED_G 3
+#define PIN_LED_B 4
 //Correcion de la diferencia de velocidad de los motores, para todos los movimientos (avanzar, girar, etc),
 //tambien vale para corregir el sentido de giro de los motores, segun el montaje fisico de los mismos
 //(numero entre -1 y 1 que multiplica a la velocidad de ambos motores):
-#define LEFT_SPEED_CORRECTION 1
+#define LEFT_SPEED_CORRECTION -1
 #define RIGHT_SPEED_CORRECTION 1
 
 /** Tipo Side
@@ -105,10 +107,14 @@ class SubnorBot {
   private:
   union {
     struct { //bitfield que ocupa un byte (1 = borde detectado)
-      char fl    : 1; //bit (LSB) correspondiente al sensor frontal derecho
-      char fr    : 1; //bit correspondiente al sensor frontal izquierdo
-      char r     : 1; //bit correspondiente al sensor trasero
-      char repos : 1; //bit correspondiente al sensor frontal izquierdo
+      char fl : 1; //bit (LSB) correspondiente al sensor frontal derecho
+      char fr : 1; //bit correspondiente al sensor frontal izquierdo
+      char r  : 1; //bit correspondiente al sensor trasero
+      char pivotingL : 1;     //bit que indica que se esta realizando un pivotaje a izquierdas para alejarse del borde
+      char pivotingR : 1;     //bit que indica que se esta realizando un pivotaje a derechas para alejarse del borde
+      char movingForward : 1; //bit que indica que se esta realizando un avance para alejarse del borde
+      char movingReverse : 1; //bit que indica que se esta realizando un retroceso para alejarse del borde
+      char rotating : 1;      //bit que indica que se esta realizando una rotacion sobre el eje para alejarse del borde
     } bits;
     char byte; //para acceder al byte entero del bitfield
     char any;  //la misma forma de acceder al bitfield pero con otro nombre, por legibilidad del codigo

@@ -10,7 +10,7 @@ SubnorBot bot = SubnorBot();
 void setup()
 {
 #ifdef TEST
-  Serial.begin(9600);
+  Serial.begin(115200);
   Serial.println("Comenzando...");
 #endif
 
@@ -111,8 +111,6 @@ void loop()
       
       default: break;
     }
-    
-    Serial.flush();
   }
 #endif
 }

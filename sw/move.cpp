@@ -56,8 +56,8 @@ void SubnorBot::updateLED()
 int SubnorBot::getSpeed(Side _side)
 {
   if (_side == LEFT)
-    return (engines.speedL - 90)/0.9;
+    return ((engines.speedL - 90)/0.9)*LEFT_SPEED_CORRECTION;
   else
-    return (engines.speedR - 90)/0.9;
+    return ((engines.speedR - 90)/0.9)*RIGHT_SPEED_CORRECTION;
 }
 #endif

@@ -2,11 +2,12 @@
 
 void SubnorBot::resolve()
 {
-  //Variables para almacenar tiempos:
+  //Para almacenar tiempos de REFINDING:
   static unsigned long _startTime = 0;
   static unsigned long _diffTime = 0;
   
-  char sniffersValue;
+  //Para almacenar tiempos de AVOIDING_EDGE:
+  unsigned static long _maneuverTime;
   
   //Maquina de estados finitos, nucleo de la IA:
   switch (state) {
@@ -56,28 +57,41 @@ void SubnorBot::resolve()
         state = CHARGING;
       else if (sniffers.any) {
         switch (sniffers.byte) {
-          case 0x01: //solo el sensor ne
-          case 0x08: //solo el sensor nw
-          case 0x09: //solo los sensores ne y nw
+          case 0x01: //solo el sensor frontal izquierdo
+          case 0x02: //solo el sensor frontal derecho
+          case 0x03: //solo los sensores frontales
             reverse(100);
           break;
           
-          case 0x02: //solo el sensor se
-          case 0x04: //solo el sensor sw
-          case 0x06: //solo los sensores se y sw
+          case 0x04: //solo el sensor trasero
             forward(100);
           break;
           
-          case 0x03: //solo los sensores ne y se
-            pivot(LEFT);
-          break;
-          
-          case 0x0C: //solo los sensores nw y sw
+          case 0x05: //solo los sensores frontal izquierdo y trasero
+            sniffers.bits.pivotingR = true;
+            _maneuverTime = millis() + GIVING_BACK;
             pivot(RIGHT);
           break;
           
-          default: //cualquier otro caso se ignora y se pasa a SEARCHING
-            state = SEARCHING;
+          case 0x06: //solo los sensores frontal derecho y trasero
+            sniffers.bits.pivotingL = true;
+            _maneuverTime = millis() + GIVING_BACK;
+            pivot(LEFT);
+          break;
+          
+          default:
+            if (sniffers.bits.pivotingL) {
+              if (_maneuverTime < millis())
+                sniffers.bits.pivotingL = false;
+              else
+                pivot(LEFT);
+            }
+            else if (sniffers.bits.pivotingR) {
+              if (_maneuverTime < millis())
+                sniffers.bits.pivotingR = false;
+              else
+                pivot(RIGHT);
+            }
           break;
         }
       }
