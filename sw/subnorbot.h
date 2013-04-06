@@ -27,7 +27,9 @@
 #define SWEEPS 6        //numero de barridos en el estado REFINDING
 #define SWEEP_TIME 500  //tiempo de cada barrido, en milisegundos
 //Bara las maniobras de reposicionamiento al encontrar un borde, en la maquina de estados en SubnorBot.resolve():
-#define GIVING_BACK 10250 //tiempo de pivotaje para dar la espalda al borde
+#define GIVING_BACK     1500 //tiempo de pivotaje para dar la espalda al borde
+#define GIVING_SEMIBACK 1000 //tiempo de pivotaje para dar la espalda al borde parcialmente (mas que nada porque no sabemos la posicion actual)
+#define TURNING         750  //tiempo de rotacin para dar la espalda al borde
 //Pines de los PWMs de los motores:
 #define PIN_ENGINE_L 9
 #define PIN_ENGINE_R 10
@@ -110,11 +112,11 @@ class SubnorBot {
       char fl : 1; //bit (LSB) correspondiente al sensor frontal derecho
       char fr : 1; //bit correspondiente al sensor frontal izquierdo
       char r  : 1; //bit correspondiente al sensor trasero
-      char pivotingL : 1;     //bit que indica que se esta realizando un pivotaje a izquierdas para alejarse del borde
-      char pivotingR : 1;     //bit que indica que se esta realizando un pivotaje a derechas para alejarse del borde
+      char pivotingL     : 1; //bit que indica que se esta realizando un pivotaje a izquierdas para alejarse del borde
+      char pivotingR     : 1; //bit que indica que se esta realizando un pivotaje a derechas para alejarse del borde
       char movingForward : 1; //bit que indica que se esta realizando un avance para alejarse del borde
       char movingReverse : 1; //bit que indica que se esta realizando un retroceso para alejarse del borde
-      char rotating : 1;      //bit que indica que se esta realizando una rotacion sobre el eje para alejarse del borde
+      char turning       : 1; //bit que indica que se esta realizando una rotacion sobre el eje para alejarse del borde
     } bits;
     char byte; //para acceder al byte entero del bitfield
     char any;  //la misma forma de acceder al bitfield pero con otro nombre, por legibilidad del codigo

@@ -58,9 +58,22 @@ void SubnorBot::resolve()
       else if (sniffers.any) {
         switch (sniffers.byte) {
           case 0x01: //solo el sensor frontal izquierdo
+            sniffers.byte &= 0x03;
+            _maneuverTime = millis() + GIVING_SEMIBACK;
+            pivot(RIGHT);
+          break;
+          
           case 0x02: //solo el sensor frontal derecho
-          case 0x03: //solo los sensores frontales
-            reverse(100);
+            sniffers.byte &= 0x03;
+            _maneuverTime = millis() + GIVING_SEMIBACK;
+            pivot(RIGHT);
+          break;
+          
+          case 0x03: //los dos sensores frontales
+            sniffers.byte &= 0x03;
+            sniffers.bits.turning = true;
+            _maneuverTime = millis() + TURNING;
+            rotate(RIGHT);
           break;
           
           case 0x04: //solo el sensor trasero
@@ -68,12 +81,14 @@ void SubnorBot::resolve()
           break;
           
           case 0x05: //solo los sensores frontal izquierdo y trasero
+            sniffers.byte &= 0x03;
             sniffers.bits.pivotingR = true;
             _maneuverTime = millis() + GIVING_BACK;
             pivot(RIGHT);
           break;
           
           case 0x06: //solo los sensores frontal derecho y trasero
+            sniffers.byte &= 0x03;
             sniffers.bits.pivotingL = true;
             _maneuverTime = millis() + GIVING_BACK;
             pivot(LEFT);
@@ -82,13 +97,13 @@ void SubnorBot::resolve()
           default:
             if (sniffers.bits.pivotingL) {
               if (_maneuverTime < millis())
-                sniffers.bits.pivotingL = false;
+                sniffers.byte &= 0x03;
               else
                 pivot(LEFT);
             }
             else if (sniffers.bits.pivotingR) {
               if (_maneuverTime < millis())
-                sniffers.bits.pivotingR = false;
+                sniffers.byte &= 0x03;
               else
                 pivot(RIGHT);
             }
