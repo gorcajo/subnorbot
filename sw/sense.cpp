@@ -1,20 +1,55 @@
 #include "subnorbot.h"
 
+boolean _IRmeasure(int IR_sensor_num);
+
 void SubnorBot::sense()
 {
 #ifndef TEST
-  //todo el codigo de este metodo debe ir dentro de este #ifndef
-  
-  //mirate los #defines en subnorbot.h que algunos te serviran, si necesitas mas los pones alli
-  
-  /*Para los siguelineas, haz algo asi:
-  //true = borde detectado, independientemente de blanco o negro:
-  sniffers.bits.ne = _ne;
-  sniffers.bits.se = _se;
-  sniffers.bits.sw = _sw;
-  sniffers.bits.nw = _nw;*/
-  
+  sonar.dist = (sonar.obj->ping_median(NUM_OF_SHOTS) / US_ROUNDTRIP_CM) - 1;
+  sniffers.bits.fl = _IRmeasure(PIN_SNIFFER_FL);
+  sniffers.bits.fr = _IRmeasure(PIN_SNIFFER_FR);
+  sniffers.bits.r  = _IRmeasure(PIN_SNIFFER_R);
 #endif
+}
+
+boolean _IRmeasure(int IR_sensor_num)
+{
+ 
+   int i=0;
+   int measure = 0;
+   boolean edge=0;
+  
+   for (i=0; i<4; i++){
+    measure+=analogRead(IR_sensor_num);
+   }
+  
+   measure=measure/4; //mathematic mean of 4 measures
+  
+   if (measure<= IR_THRESHOLD)//if white detected
+   {
+     #ifdef WHITEFLOOR
+     edge=NOEDGE;//NOEDGE=0
+     #endif
+    
+     #ifndef WHITEFLOOR
+     edge=EDGE;//EDGE=1
+     #endif
+    
+   }
+    else   //black detected
+    {      //measure>IR_THRESHOLD
+
+     #ifdef WHITEFLOOR
+     edge=EDGE;//EDGE=1
+     #endif
+    
+     #ifndef WHITEFLOOR
+     edge=NOEDGE;//NOEDGE=0
+     #endif
+         
+    }
+   
+    return(edge);
 }
 
 #ifdef TEST

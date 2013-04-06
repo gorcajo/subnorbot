@@ -7,7 +7,7 @@
 
 /** Constantes, centralizadas aqui */
 //Para realizar pruebas
-#define TEST
+//#define TEST
 //Tiempo, en milisegundos, de la espera inicial al arranque:
 #ifdef TEST
   #define IDLE_TIME 500
@@ -15,14 +15,21 @@
   #define IDLE_TIME 5000
 #endif
 //Pines de los siguelineas:
-#define PIN_SNIFFER_FL A2
-#define PIN_SNIFFER_FR A1
-#define PIN_SNIFFER_R  A0
+#define PIN_SNIFFER_FL 2
+#define PIN_SNIFFER_FR 1
+#define PIN_SNIFFER_R  0
+//Mas sobre los sniffers:
+//#define WHITEFLOOR //invierte suelo/borde negro/blanco, si no esta definido el suelo es negro y el blorde blanco
+#define IR_THRESHOLD 100
+#define EDGE   1
+#define NOEDGE 0
 //Pines del sonar:
 #define PIN_SONAR_TRIGGER 6
 #define PIN_SONAR_ECHO    11
 //Diametro del ring:
-#define DOYO_DIAMMETER    75
+#define DOYO_DIAMMETER 76
+//Mas sobre el sonar:
+#define NUM_OF_SHOTS 5
 //Bara los barridos del estado REFINDING, de la maquina de estados en SubnorBot.resolve():
 #define SWEEPS 6        //numero de barridos en el estado REFINDING
 #define SWEEP_TIME 500  //tiempo de cada barrido, en milisegundos
@@ -112,11 +119,9 @@ class SubnorBot {
       char fl : 1; //bit (LSB) correspondiente al sensor frontal derecho
       char fr : 1; //bit correspondiente al sensor frontal izquierdo
       char r  : 1; //bit correspondiente al sensor trasero
-      char pivotingL     : 1; //bit que indica que se esta realizando un pivotaje a izquierdas para alejarse del borde
-      char pivotingR     : 1; //bit que indica que se esta realizando un pivotaje a derechas para alejarse del borde
-      char movingForward : 1; //bit que indica que se esta realizando un avance para alejarse del borde
-      char movingReverse : 1; //bit que indica que se esta realizando un retroceso para alejarse del borde
-      char turning       : 1; //bit que indica que se esta realizando una rotacion sobre el eje para alejarse del borde
+      char pivotingL : 1; //bit que indica que se esta realizando un pivotaje a izquierdas para alejarse del borde
+      char pivotingR : 1; //bit que indica que se esta realizando un pivotaje a derechas para alejarse del borde
+      char turning   : 1; //bit que indica que se esta realizando una rotacion sobre el eje para alejarse del borde
     } bits;
     char byte; //para acceder al byte entero del bitfield
     char any;  //la misma forma de acceder al bitfield pero con otro nombre, por legibilidad del codigo

@@ -59,12 +59,14 @@ void SubnorBot::resolve()
         switch (sniffers.byte) {
           case 0x01: //solo el sensor frontal izquierdo
             sniffers.byte &= 0x03;
+            sniffers.bits.pivotingR = true;
             _maneuverTime = millis() + GIVING_SEMIBACK;
             pivot(RIGHT);
           break;
           
           case 0x02: //solo el sensor frontal derecho
             sniffers.byte &= 0x03;
+            sniffers.bits.pivotingL = true;
             _maneuverTime = millis() + GIVING_SEMIBACK;
             pivot(RIGHT);
           break;
@@ -106,6 +108,12 @@ void SubnorBot::resolve()
                 sniffers.byte &= 0x03;
               else
                 pivot(RIGHT);
+            }
+            else if (sniffers.bits.turning) {
+              if (_maneuverTime < millis())
+                sniffers.byte &= 0x03;
+              else
+                rotate(RIGHT);
             }
           break;
         }
