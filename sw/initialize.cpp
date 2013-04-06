@@ -13,7 +13,7 @@ void SubnorBot::initialize()
   sniffers.byte = 0;
   
   //Inicializacion del sonar:
-  sonar.obj = new NewPing(PIN_SONAR_TRIGGER, PIN_SONAR_ECHO, DOJO_DIAMMETER);
+  sonar.obj = new NewPing(PIN_SONAR_TRIGGER, PIN_SONAR_ECHO, DOYO_DIAMMETER);
   sonar.dist = -1;
   
   //Inicializacion de las velocidades deseadas de los motores:

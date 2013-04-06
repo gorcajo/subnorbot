@@ -15,15 +15,14 @@
   #define IDLE_TIME 5000
 #endif
 //Pines de los siguelineas:
-#define PIN_SNIFFER_NE  2
-#define PIN_SNIFFER_SE  3
-#define PIN_SNIFFER_SW  4
-#define PIN_SNIFFER_NW  5
+#define PIN_SNIFFER_FL 2
+#define PIN_SNIFFER_FR 3
+#define PIN_SNIFFER_R  4
 //Pines del sonar:
 #define PIN_SONAR_TRIGGER 11
 #define PIN_SONAR_ECHO    12
 //Diametro del ring:
-#define DOJO_DIAMMETER    75
+#define DOYO_DIAMMETER    75
 //Bara los barridos del estado REFINDING, de la maquina de estados en SubnorBot.resolve()
 #define SWEEPS 6        //numero de barridos en el estado REFINDING
 #define SWEEP_TIME 2000 //tiempo de cada barrido, en milisegundos
@@ -94,22 +93,21 @@ class SubnorBot {
 #ifdef TEST
     //Metodos unicamente para el modo test:
     void setDistance(int _d);  //fuerza una distancia determinada al rival en el sonar
-    void switchSniffers(boolean _ne, boolean _se, boolean _sw, boolean _nw);  //fuerza una conmutacion en el estado de los siguelineas
-    boolean getSnifferNE();   //devuelve el estado del siguelineas NE
-    boolean getSnifferSE();   //devuelve el estado del siguelineas SE
-    boolean getSnifferSW();   //devuelve el estado del siguelineas SW
-    boolean getSnifferNW();   //devuelve el estado del siguelineas NW
+    void switchSniffers(boolean _fl, boolean _fr, boolean _r);  //fuerza una conmutacion en el estado de los siguelineas
+    boolean getSnifferFL();   //devuelve el estado del siguelineas frontal izquierdo
+    boolean getSnifferFR();   //devuelve el estado del siguelineas frontal derecho
+    boolean getSnifferR();    //devuelve el estado del siguelineas trasero
     State getState();         //devuelve el estado de la maquina de estados de la IA
     int getSpeed(Side _side); //devuelve la velocidad, entre -100 y 100, de uno de los motores
 #endif
 
   private:
   union {
-    struct {        //bitfield que ocupa un byte (1 = borde detectado)
-      char ne : 1; //bit (LSB) correspondiente al sensor frontal derecho
-      char se : 1; //bit correspondiente al sensor trasero derecho
-      char sw : 1; //bit correspondiente al sensor trasero izquierdo
-      char nw : 1; //bit correspondiente al sensor frontal izquierdo
+    struct { //bitfield que ocupa un byte (1 = borde detectado)
+      char fl    : 1; //bit (LSB) correspondiente al sensor frontal derecho
+      char fr    : 1; //bit correspondiente al sensor frontal izquierdo
+      char r     : 1; //bit correspondiente al sensor trasero
+      char repos : 1; //bit correspondiente al sensor frontal izquierdo
     } bits;
     char byte; //para acceder al byte entero del bitfield
     char any;  //la misma forma de acceder al bitfield pero con otro nombre, por legibilidad del codigo

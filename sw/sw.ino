@@ -49,27 +49,21 @@ void loop()
   else {
     _cmd = Serial.read();
     switch (_cmd) {
-      case '1':
-        Serial.println("Siguelineas SW conmutado.");
-        bot.switchSniffers(false, false, true, false);
+      case 'i':
+        Serial.println("Siguelineas frontal izquierdo conmutado.");
+        bot.switchSniffers(true, false, false);
         Serial.println();
       break;
       
-      case '3':
-        Serial.println("Siguelineas SE conmutado.");
-        bot.switchSniffers(false, true, false, false);
+      case 'p':
+        Serial.println("Siguelineas frontal derecho conmutado.");
+        bot.switchSniffers(false, true, false);
         Serial.println();
       break;
       
-      case '7':
-        Serial.println("Siguelineas NW conmutado.");
-        bot.switchSniffers(false, false, false, true);
-        Serial.println();
-      break;
-      
-      case '9':
-        Serial.println("Siguelineas NE conmutado.");
-        bot.switchSniffers(true, false, false, false);
+      case 'l':
+        Serial.println("Siguelineas trasero conmutado.");
+        bot.switchSniffers(false, false, true);
         Serial.println();
       break;
       
@@ -85,7 +79,7 @@ void loop()
         Serial.println();
       break;
       
-      case 's':
+      case 'e':
         Serial.print("* Estado: ");
         switch (bot.getState()) {
           case IDLE:          Serial.println("IDLE");          break;
@@ -102,16 +96,16 @@ void loop()
         Serial.print(bot.getSpeed(RIGHT));
         Serial.println("%");
         Serial.println("* Estado de los siguelineas: ");
-        Serial.println("    --");
+        Serial.println("    ---");
         Serial.print("   |");
-        if (bot.getSnifferNW()) Serial.print("x"); else Serial.print(" ");
-        if (bot.getSnifferNE()) Serial.print("x"); else Serial.print(" ");
+        if (bot.getSnifferFL()) Serial.print("x"); else Serial.print(" ");
+        Serial.print(" ");
+        if (bot.getSnifferFR()) Serial.print("x"); else Serial.print(" ");
         Serial.println("|");
-        Serial.print("   |");
-        if (bot.getSnifferSW()) Serial.print("x"); else Serial.print(" ");
-        if (bot.getSnifferSE()) Serial.print("x"); else Serial.print(" ");
-        Serial.println("|");
-        Serial.println("    --");
+        Serial.print("   | ");
+        if (bot.getSnifferR()) Serial.print("x"); else Serial.print(" ");
+        Serial.println(" |");
+        Serial.println("    ---");
         Serial.println();
       break;
       

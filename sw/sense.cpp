@@ -23,32 +23,26 @@ void SubnorBot::setDistance(int _d)
   sonar.dist = _d;
 }
 
-void SubnorBot::switchSniffers(boolean _ne, boolean _se, boolean _sw, boolean _nw)
+void SubnorBot::switchSniffers(boolean _fl, boolean _fr, boolean _r)
 {
-  if (_ne) sniffers.bits.ne = !sniffers.bits.ne;
-  if (_se) sniffers.bits.se = !sniffers.bits.se;
-  if (_sw) sniffers.bits.sw = !sniffers.bits.sw;
-  if (_nw) sniffers.bits.nw = !sniffers.bits.nw;
+  if (_fl) sniffers.bits.fl = !sniffers.bits.fl;
+  if (_fr) sniffers.bits.fr = !sniffers.bits.fr;
+  if (_r) sniffers.bits.r = !sniffers.bits.r;
 }
 
 
-boolean SubnorBot::getSnifferNE()
+boolean SubnorBot::getSnifferFL()
 {
-  return sniffers.bits.ne;
+  return sniffers.bits.fl;
 }
 
-boolean SubnorBot::getSnifferSE()
+boolean SubnorBot::getSnifferFR()
 {
-  return sniffers.bits.se;
+  return sniffers.bits.fr;
 }
 
-boolean SubnorBot::getSnifferSW()
+boolean SubnorBot::getSnifferR()
 {
-  return sniffers.bits.sw;
-}
-
-boolean SubnorBot::getSnifferNW()
-{
-  return sniffers.bits.nw;
+  return sniffers.bits.r;
 }
 #endif
