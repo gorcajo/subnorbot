@@ -23,6 +23,11 @@ void SubnorBot::initialize()
   if (!engines.right.attached())
     engines.right.attach(PIN_ENGINE_R);
   
+  //Configuracion de los pines del LED RGB:
+  pinMode(PIN_LED_R, OUTPUT);
+  pinMode(PIN_LED_G, OUTPUT);
+  pinMode(PIN_LED_B, OUTPUT);
+  
   //Codigo de error:
   error = 0;
   
