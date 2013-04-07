@@ -8,8 +8,25 @@ void SubnorBot::move()
 
 void SubnorBot::setSpeed(int _l, int _r)
 {
-  engines.speedL = (_l * LEFT_SPEED_CORRECTION)*0.9 + 90;
-  engines.speedR = (_r * RIGHT_SPEED_CORRECTION)*0.9 + 90;
+  //Motor izquierdo:
+  if (!_l && engines.left.attached()) {
+    engines.left.detach();
+  }
+  else {
+    if (!engines.left.attached())
+      engines.left.attach(PIN_ENGINE_L);
+    engines.speedL = (_l * LEFT_SPEED_CORRECTION)*0.9 + 90;
+  }
+  
+  //Motor derecho:
+  if (!_r && engines.left.attached()) {
+    engines.left.detach();
+  }
+  else {
+    if (!engines.right.attached())
+      engines.right.attach(PIN_ENGINE_R);
+    engines.speedR = (_r * RIGHT_SPEED_CORRECTION)*0.9 + 90;
+  }
 }
 
 void SubnorBot::updateLED()
