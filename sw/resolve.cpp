@@ -22,11 +22,11 @@ void SubnorBot::resolve()
     break;
     /**************************************************/
     case CHARGING:
-      if (sonar.dist != -1) {
+      if (sniffers.any)
+        state = AVOIDING_EDGE;
+      else if (sonar.dist != -1) {
         forward(100);
       }
-      else if (sniffers.any)
-        state = AVOIDING_EDGE;
       else {
         _startTime = millis() - SWEEP_TIME/2; //el tiempo de comienzo es la mitad para que del primer barrido haga solo medio cono
         state = REFINDING;
@@ -130,9 +130,9 @@ void SubnorBot::resolve()
 void SubnorBot::rotate(Side _side)
 {
   if (_side == LEFT)
-    setSpeed(-100, 100);
+    setSpeed(-25, 25);
   else
-    setSpeed(100, -100);
+    setSpeed(25, -25);
 }
 
 void SubnorBot::pivot(Side _side)

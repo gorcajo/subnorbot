@@ -16,9 +16,6 @@ void SubnorBot::initialize()
   sonar.obj = new NewPing(PIN_SONAR_TRIGGER, PIN_SONAR_ECHO, DOYO_DIAMMETER);
   sonar.dist = -1;
   
-  //Inicializacion de las velocidades deseadas de los motores:
-  setSpeed(0, 0);
-  
   //Configuracion de los pines del LED RGB:
   pinMode(PIN_LED_R, OUTPUT);
   pinMode(PIN_LED_G, OUTPUT);
@@ -30,6 +27,8 @@ void SubnorBot::initialize()
   //Espera de 5s menos el tiempo que ha llevado ejecutar este metodo:
   delay(IDLE_TIME - (millis() - _startTime));
   
+  //Inicializacion de las velocidades deseadas de los motores:
+  setSpeed(0, 0);
   //Asociado de los PWMs a los motores:
   if (!engines.left.attached())
     engines.left.attach(PIN_ENGINE_L);
