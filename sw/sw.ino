@@ -91,10 +91,14 @@ void loop()
         }
         Serial.print("* Motor Izq.: ");
         Serial.print(bot.getSpeed(LEFT));
-        Serial.println("%");
+        Serial.print("% (");
+        Serial.print(bot.getAngle(LEFT));
+        Serial.println(")");
         Serial.print("* Motor Dch.: ");
         Serial.print(bot.getSpeed(RIGHT));
-        Serial.println("%");
+        Serial.print("% (");
+        Serial.print(bot.getAngle(RIGHT));
+        Serial.println(")");
         Serial.println("* Estado de los siguelineas: ");
         Serial.println("    ---");
         Serial.print("   |");

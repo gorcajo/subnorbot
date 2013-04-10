@@ -8,6 +8,7 @@ void SubnorBot::move()
 
 void SubnorBot::setSpeed(int _l, int _r)
 {
+  /*
   //Motor izquierdo:
   if (!_l && engines.left.attached()) {
     engines.left.detach();
@@ -26,7 +27,9 @@ void SubnorBot::setSpeed(int _l, int _r)
     if (!engines.right.attached())
       engines.right.attach(PIN_ENGINE_R);
     engines.speedR = (_r * RIGHT_SPEED_CORRECTION)*0.9 + 90;
-  }
+  }*/
+  engines.speedL = _l;
+  engines.speedR = _r;
 }
 
 void SubnorBot::updateLED()
@@ -51,7 +54,7 @@ void SubnorBot::updateLED()
     break;
     
     case REFINDING: //amarillo
-      digitalWrite(PIN_LED_R, LOW);
+      digitalWrite(PIN_LED_R, HIGH);
       digitalWrite(PIN_LED_G, HIGH);
       digitalWrite(PIN_LED_B, HIGH);
     break;
@@ -76,5 +79,13 @@ int SubnorBot::getSpeed(Side _side)
     return ((engines.speedL - 90)/0.9)*LEFT_SPEED_CORRECTION;
   else
     return ((engines.speedR - 90)/0.9)*RIGHT_SPEED_CORRECTION;
+}
+
+int SubnorBot::getAngle(Side _side)
+{
+  if (_side == LEFT)
+    return engines.speedL;
+  else
+    return engines.speedR;
 }
 #endif
